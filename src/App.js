@@ -4,6 +4,8 @@ import Pages from "./pages/Pages";
 import Search from "./components/Search";
 import { GiKnifeFork } from "react-icons/gi";
 import { styled } from "styled-components";
+import Favorites from "./pages/Favorites";
+import Favorite from "./components/Favorite";
 
 function App() {
   return (
@@ -13,9 +15,11 @@ function App() {
         <GiKnifeFork /> 
         <Logo to={"/"}>Yummy</Logo>
       </Nav>
+
         <Search />
         <Category />
         <Pages />
+        
       </BrowserRouter>
     </div>
   );
