@@ -42,9 +42,9 @@ function Cuisine() {
   //     let index =favorite.indexOf(id);
   //     console.log(index);
   //     let temp = [...favorite.slice(0,index), ...favorite.slice(index+1)];
-  //     setFavorite(temp);
+  //     setFavorite(temp)
   // }
-  // console.log(favorite.id);
+  // console.log(favorite.id)
 
   useEffect(() => {
     getCuisine(params.type);
