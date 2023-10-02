@@ -5,6 +5,7 @@ import Cuisine from "./Cuisine";
 import Searched from "./Searched";
 import Recipe from "./Recipe";
 import { AnimatePresence } from "framer-motion";
+import Favorites from "./Favorites";
 
 
 function Pages() {
@@ -16,6 +17,7 @@ function Pages() {
         <Route path="/cuisine/:type" element={<Cuisine />} />
         <Route path="/searched/:search" element={<Searched />} />
         <Route path="/recipe/:name" element={<Recipe />}/>
+        <Route path="/recipe/:favorites" element={<Favorites />}/>
       </Routes>
   </AnimatePresence>
       

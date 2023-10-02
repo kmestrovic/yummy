@@ -2,6 +2,7 @@ import {FaPizzaSlice, FaHamburger} from 'react-icons/fa';
 import {GiNoodles, GiChopsticks} from 'react-icons/gi';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 
 function Category() {
@@ -23,6 +24,10 @@ function Category() {
             <GiChopsticks/>
             <h4>Japaneseeee</h4>
         </SLink> 
+        <SLink to={'/cuisine/Favorites'}>
+            <AiFillHeart/>
+            <h4>Favorites</h4>
+        </SLink>
 
     </List>
   )

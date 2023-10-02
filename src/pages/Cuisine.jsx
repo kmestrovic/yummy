@@ -2,86 +2,105 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Favorites from "./Favorites";
-import Favorite from "../components/Favorite";
 
 function Cuisine() {
-  const [cuisine, setCuisine] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [favorites, setFavorites]= useState([]);
   let params = useParams();
-
-  for (var i = 0; i < cuisine.length; i++) {
-    cuisine[i].favorite = false;
-  }
 
   const getCuisine = async (name) => {
     const data = await fetch(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=${name}`
     );
     const recipes = await data.json();
-    setCuisine(recipes.results);
+    setRecipes(recipes.results);
   };
 
-  // const addToFavorite= id=> {
-  //     if (!favorite.includes(id)) setFavorite(favorite.concat(id))
-  // };
-
-  const [favorite, setFavorite] = useState(cuisine.favorite);
-  var btn = document.querySelector("button");
-
-  const addToFavorite = () => {
-    setFavorite((favorite) => !favorite);
-    if (favorite) {
-      btn.innerHTML = "not favorite";
-    } else {
-      btn.innerHTML = "favorite";
-    }
-  };
-
-  // const removeFavorite=id=> {
-  //     let index =favorite.indexOf(id);
-  //     console.log(index);
-  //     let temp = [...favorite.slice(0,index), ...favorite.slice(index+1)];
-  //     setFavorite(temp)
-  // }
-  // console.log(favorite.id)
 
   useEffect(() => {
     getCuisine(params.type);
-    console.log(params.type);
   }, [params.type]);
 
+  const toggleFavorite = (id) => {
+    
+    setRecipes(recipes.map(recipe => {
+      if(recipe.id === id) {
+        return {
+          ...recipe,
+          isFavorite: !recipe.isFavorite
+        }
+      }
+
+      return recipe
+    }))
+    setFavorites(recipes.map(recipe => {
+      let array= favorites;
+      if(recipe.isFavorite) {
+          array.push(recipe.title)
+        }
+        else {
+          array=array.filter(array=>recipe.title)
+        }
+      }
+
+      
+    ))
+
+    setFavorites([...favorites])
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    
+    // var storage = localStorage.getItem('favItem' + (array)|| '0')
+    // if (storage==null) {
+    //   localStorage.setItem(('favItem'+(recipe.id)), JSON.stringify(recipe))
+    // }
+    // else {
+    //   localStorage.removeItem('favItem' + (recipe.id))
+    // }
+    console.log(favorites)
+    
+
+  }
+
+
   return (
+    
     <Grid
+    
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-    {cuisine.map((item) => {
+      <div> This is list of favorites: 
+        {favorites.map((favorites)=> {
+          return(<h4>{favorites}</h4>)
+          
+        })}
+      </div>
+    {recipes.map((recipe) => {
         return (
-          <Card key={item.id}>
-            <Link to={"/recipe/" + item.id}>
-              <img src={item.image} alt="" />
-              <h4>{item.title}</h4>
+             <Card key={recipe.id}>
+            <Link to={"/recipe/" + recipe.id}>
+              <img src={recipe.image} alt="" />
+              <h4>{recipe.title}</h4>
             </Link>
-            <button id="mybtn" onClick={addToFavorite}>
-              <AiOutlineHeart />
+            <button onClick={() => toggleFavorite(recipe.id)}>
+              {recipe.isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
             </button>
-            <Favorites cuisine={cuisine} favorite={favorite} />
-
-            <Favorite cuisine={cuisine} />
+            
+            
           </Card>
+          
         );
       })
     }
     </Grid>
   );
-
-  //   let findFavorite = cuisine.filter(item=>favorite.includes(item.id));
-
-  console.log(favorite);
 }
+
+const favorites=<Favorites favorites/>
 
 const Grid = styled(motion.div)`
   display: grid;

@@ -19,6 +19,7 @@ function App() {
         <Search />
         <Category />
         <Pages />
+        <Favorites />
         
       </BrowserRouter>
     </div>
