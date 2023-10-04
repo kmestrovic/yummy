@@ -38,7 +38,7 @@ function Cuisine() {
     setFavorites(recipes.map(recipe => {
       let array= favorites;
       if(recipe.isFavorite) {
-          array.push(recipe.title)
+          array.push(recipe)
         }
         else {
           array=array.filter(array=>recipe.title)
@@ -73,12 +73,15 @@ function Cuisine() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div> This is list of favorites: 
+      <List>
+      <div> List of favorites: 
         {favorites.map((favorites)=> {
-          return(<h4>{favorites}</h4>)
-          
+          return(<Link to={"/recipe/" + favorites.id}><h4>{favorites.title}</h4>
+          <img src={favorites.image}/>
+         </Link>)
         })}
       </div>
+      </List>
     {recipes.map((recipe) => {
         return (
              <Card key={recipe.id}>
@@ -87,7 +90,7 @@ function Cuisine() {
               <h4>{recipe.title}</h4>
             </Link>
             <button onClick={() => toggleFavorite(recipe.id)}>
-              {recipe.isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
+              {recipe.isFavorite ? <AiOutlineHeart /> : <AiFillHeart />}
             </button>
             
             
@@ -101,6 +104,18 @@ function Cuisine() {
 }
 
 const favorites=<Favorites favorites/>
+
+const List= styled.div `
+display:flex;
+justify-content:center;
+margin:2rem 0rem;
+img {
+  width: 20%;
+  border-radius: 2rem;
+  
+}
+
+`;
 
 const Grid = styled(motion.div)`
   display: grid;

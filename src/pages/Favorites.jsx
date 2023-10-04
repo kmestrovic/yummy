@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 function Favorites() {
   const [favorite, setFavorite] = useState([]);
@@ -8,7 +10,8 @@ function Favorites() {
   }, []);
 
   const getFavorite =  async () => {
-    var check = localStorage.getItem("favorites");
+    var check = JSON.parse(localStorage.getItem("favorites"));
+    
     // window.addEventListener("storage",getFavorite)
 
     // if (check) {
@@ -18,9 +21,12 @@ function Favorites() {
 
       // localStorage.setItem("favorites", JSON.stringify(data.recipes));
       setFavorite(check);
-      console.log(check);
-      console.log(favorite)
+      console.log(check);     
+      
     }
+    console.log(typeof(favorite))
+  
+    // const list= favorite.map((favorite)=> <li>{favorite}</li>)
   
   // var data=[];
   // data=JSON.parse(localStorage.getItem("favorites"))
@@ -38,8 +44,31 @@ function Favorites() {
       
     // })}
     // </div>
-    <div>{favorite}</div>
+    <List>
+      <div> 
+        {favorite.map((favorite)=> {
+          return(<Link to={"/recipe/" + favorite.id}><h4>{favorite.title}</h4>
+          <img src={favorite.image}/>
+         </Link>)
+        })}
+      </div>
+    </List>
+    
+      
+    
   )
   }
+
+  const List= styled.div `
+display:flex;
+justify-content:center;
+margin:2rem 0rem;
+img {
+  width: 20%;
+  border-radius: 2rem;
+  
+}
+
+`;
 
 export default Favorites
