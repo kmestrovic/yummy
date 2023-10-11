@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import UploadPhoto from "../components/UploadPhoto";
 
 function Recipe() {
   let params = useParams();
@@ -55,6 +56,7 @@ function Recipe() {
           </ul>
         )}
       </Info>
+      <UploadPhoto/>
     </DetailWrapper>
   );
 }
