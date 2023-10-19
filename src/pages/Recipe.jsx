@@ -22,44 +22,51 @@ function Recipe() {
   }, [params.name]);
 
   return (
-    <DetailWrapper>
-      <div>
-        <h2>{details.title}</h2>
-        <img src={details.image} alt="" />
-      </div>
-      <Info>
-        <Button
-          className={activeTab === "instructions" ? "active" : ""}
-          onClick={() => setActiveTab("instructions")}
-        >
-          Instructions
-        </Button>
-        <Button
-          className={activeTab === "ingredients" ? "active" : ""}
-          onClick={() => setActiveTab("ingredients")}
-        >
-          Ingredients
-        </Button>
+    <RecipeContainer>
+      <DetailWrapper>
+        <div>
+          <h2>{details.title}</h2>
+          <img src={details.image} alt="" />
+        </div>
+        <Info>
+          <Button
+            className={activeTab === "instructions" ? "active" : ""}
+            onClick={() => setActiveTab("instructions")}
+            >
+            Instructions
+          </Button>
+          <Button
+            className={activeTab === "ingredients" ? "active" : ""}
+            onClick={() => setActiveTab("ingredients")}
+            >
+            Ingredients
+          </Button>
 
-        {activeTab === "instructions" && (
-          <div>
-            <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>;
-            <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
-          </div>
-        )}
+          {activeTab === "instructions" && (
+            <div>
+              <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>;
+              <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
+            </div>
+          )}
 
-        {activeTab === "ingredients" && (
-          <ul>
-            {details.extendedIngredients.map((ingredient) => (
-              <li key={ingredient.id}>{ingredient.original}</li>
-            ))}
-          </ul>
-        )}
-      </Info>
+          {activeTab === "ingredients" && (
+            <ul>
+              {details.extendedIngredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.original}</li>
+                ))}
+            </ul>
+          )}
+        </Info>
+      </DetailWrapper>
       <UploadPhoto/>
-    </DetailWrapper>
+    </RecipeContainer>
   );
 }
+
+const RecipeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 const DetailWrapper = styled.div`
   margin-top: 10rem;
@@ -79,6 +86,10 @@ const DetailWrapper = styled.div`
   ul {
     margin-top: 2rem;
   }
+  img {
+    border-radius:1rem;
+    
+  }
 `;
 
 const Button = styled.button`
@@ -91,7 +102,7 @@ const Button = styled.button`
 `;
 
 const Info = styled.div`
-  margin-left: 10rem;
+  margin-left: 2rem;
 `;
 
 export default Recipe;
